@@ -79,24 +79,6 @@ func New(config *Config) *Client {
 	}
 }
 
-/*func (client *Client) setAuthorization(req *http.Request) error {
-	user, err := readAuthData()
-	if os.IsNotExist(err) {
-		return nil
-	}
-	if err != nil {
-		return err
-	}
-
-	var buf bytes.Buffer
-	fmt.Fprintf(&buf, `Macaroon root="%s"`, user.Macaroon)
-	for _, discharge := range user.Discharges {
-		fmt.Fprintf(&buf, `, discharge="%s"`, discharge)
-	}
-	req.Header.Set("Authorization", buf.String())
-	return nil
-}*/
-
 type RequestError struct{ error }
 
 func (e RequestError) Error() string {
@@ -131,12 +113,6 @@ func (client *Client) raw(method, urlpath string, query url.Values, headers map[
 	for key, value := range headers {
 		req.Header.Set(key, value)
 	}
-
-	// set Authorization header if there are user's credentials
-	/*err = client.setAuthorization(req)
-	if err != nil {
-		return nil, AuthorizationError{err}
-	}*/
 
 	rsp, err := client.doer.Do(req)
 	if err != nil {
