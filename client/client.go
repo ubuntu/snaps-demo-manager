@@ -34,6 +34,21 @@ import (
 
 const socketPath = "/run/snapd.socket"
 
+// C client to communicate with Snapd
+var C *Client
+
+func init() {
+	C = &Client{
+		baseURL: url.URL{
+			Scheme: "http",
+			Host:   "localhost",
+		},
+		doer: &http.Client{
+			Transport: &http.Transport{Dial: unixDialer},
+		},
+	}
+}
+
 func unixDialer(_, _ string) (net.Conn, error) {
 	return net.Dial("unix", socketPath)
 }
@@ -53,30 +68,6 @@ type Config struct {
 type Client struct {
 	baseURL url.URL
 	doer    doer
-}
-
-// New returns a new instance of Client
-func New(config *Config) *Client {
-	// By default talk over an UNIX socket.
-	if config == nil || config.BaseURL == "" {
-		return &Client{
-			baseURL: url.URL{
-				Scheme: "http",
-				Host:   "localhost",
-			},
-			doer: &http.Client{
-				Transport: &http.Transport{Dial: unixDialer},
-			},
-		}
-	}
-	baseURL, err := url.Parse(config.BaseURL)
-	if err != nil {
-		panic(fmt.Sprintf("cannot parse server base URL: %q (%v)", config.BaseURL, err))
-	}
-	return &Client{
-		baseURL: *baseURL,
-		doer:    &http.Client{},
-	}
 }
 
 type RequestError struct{ error }
