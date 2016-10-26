@@ -1,4 +1,4 @@
-package manager
+package state
 
 import (
 	"fmt"
@@ -18,9 +18,11 @@ type instructionsFormat struct {
 	}
 }
 
+// SnapsInstructions are instructions global to the system
+var SnapsInstructions instructionsFormat
+
 func init() {
 	f := path.Join(dirs.Data, "instructions.yaml")
-	var instructions instructionsFormat
 
 	// load instructions
 	d, err := ioutil.ReadFile(f)
@@ -28,11 +30,11 @@ func init() {
 		// no file available: can be just installed with no instructions
 		return
 	}
-	if err = yaml.Unmarshal(d, &instructions); err != nil {
+	if err = yaml.Unmarshal(d, &SnapsInstructions); err != nil {
 		panic("Couldn't deserialized instructions from file:" + err.Error())
 	}
 
-	fmt.Printf("%+v\n", instructions)
+	fmt.Printf("%+v\n", SnapsInstructions)
 
 }
 
