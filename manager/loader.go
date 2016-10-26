@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"path"
 
+	"github.com/ubuntu/snaps-manager/dirs"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -17,7 +19,7 @@ type instructionsFormat struct {
 }
 
 func init() {
-	f := path.Join("instructions.yaml")
+	f := path.Join(dirs.Data, "instructions.yaml")
 	var instructions instructionsFormat
 
 	// load instructions
