@@ -11,21 +11,32 @@ import (
 )
 
 type configFormat struct {
-	Snaps snapsInstructions
+	Snaps SnapsProperty
 }
 
-type snapsInstructions map[string][]struct {
-	Origin string
-	Wait   int
-	Next   string
+// SnapsProperty maps all snaps on the system.
+type SnapsProperty map[string]SnapProperty
+
+// AllSnapsProperty for all snaps on the system.
+var AllSnapsProperty SnapsProperty
+
+// SnapProperty expose properties of one snap.
+type SnapProperty struct {
+	Enabled      bool
+	Instructions []SnapInstruction
 }
 
-// SnapsInstructions are instructions global to the system
-var SnapsInstructions snapsInstructions
+// SnapInstruction unit.
+type SnapInstruction struct {
+	Origin        string
+	Wait          int
+	Nextoperation string
+}
 
 func init() {
 	f := path.Join(dirs.Data, "config.yaml")
-	var c configFormat
+	c := configFormat{}
+
 	// load instructions
 	d, err := ioutil.ReadFile(f)
 	if err != nil {
@@ -35,6 +46,6 @@ func init() {
 	if err = yaml.Unmarshal(d, &c); err != nil {
 		logger.Err("Couldn't deserialized config from file:", err)
 	}
-	SnapsInstructions = c.Snaps
-	logger.Info("Loaded snap instructions: %+v\n", SnapsInstructions)
+	logger.Info("Loaded configuration: %+v\n", c)
+	AllSnapsProperty = c.Snaps
 }

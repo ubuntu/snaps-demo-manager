@@ -18,7 +18,7 @@ type snapState struct {
 type Snap struct {
 	Name         string
 	currentState snapState
-	Instructions chan state.SnapInstructions
+	Instructions chan []state.SnapInstruction
 	Stop         chan bool
 }
 
@@ -26,7 +26,7 @@ type Snap struct {
 func NewSnap(name string) *Snap {
 	logger.Info("Prepare new snap %s", name)
 	s := &Snap{Name: name}
-	s.Instructions = make(chan state.SnapInstructions)
+	s.Instructions = make(chan []state.SnapInstruction)
 	s.Stop = make(chan bool)
 	return s
 }
