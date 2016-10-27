@@ -1,11 +1,11 @@
 package state
 
 import (
-	"fmt"
 	"io/ioutil"
 	"path"
 
 	"github.com/ubuntu/snaps-manager/dirs"
+	"github.com/ubuntu/snaps-manager/logger"
 
 	"gopkg.in/yaml.v2"
 )
@@ -33,13 +33,8 @@ func init() {
 		return
 	}
 	if err = yaml.Unmarshal(d, &c); err != nil {
-		panic("Couldn't deserialized config from file:" + err.Error())
+		logger.Err("Couldn't deserialized config from file:", err)
 	}
 	SnapsInstructions = c.Snaps
-	fmt.Printf("%+v\n", SnapsInstructions)
-
-}
-
-func F() {
-
+	logger.Info("Loaded snap instructions: %+v\n", SnapsInstructions)
 }
