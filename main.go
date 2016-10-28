@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"sync"
-	"time"
 
-	"github.com/ubuntu/snaps-manager/client"
 	"github.com/ubuntu/snaps-manager/manager"
 	"github.com/ubuntu/snaps-manager/state"
 )
@@ -21,12 +18,12 @@ func main() {
 		startAndStopTracking(name, p, &wg)
 	}
 	wg.Done()
-	return
-	c := client.C
-	snap, r, err := c.Snap("consul")
+	/*c := snapd.C
+	snap, _, err := c.Snap("content-plug")
 	fmt.Printf("%+v\n", snap)
-	fmt.Printf("%+v\n", r)
+	fmt.Printf("%s\n", snap.Channel)
 	fmt.Printf("%+v\n", err)
+	return
 	changeid, err := c.Install("face-detection-demo", &client.SnapOptions{
 		Channel: "beta",
 		DevMode: true,
@@ -41,7 +38,7 @@ func main() {
 		fmt.Println(change.Status)
 		fmt.Println(change.Ready)
 		time.Sleep(time.Duration(time.Second))
-	}
+	}*/
 }
 
 func startAndStopTracking(name string, p state.SnapProperty, wg *sync.WaitGroup) {
