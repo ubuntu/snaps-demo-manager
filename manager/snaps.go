@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubuntu/snaps-manager/logger"
-	"github.com/ubuntu/snaps-manager/state"
+	"github.com/ubuntu/snaps-demo-manager/logger"
+	"github.com/ubuntu/snaps-demo-manager/state"
 )
 
 type snapState struct {

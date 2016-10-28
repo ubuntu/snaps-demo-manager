@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 	"path"
 
-	"github.com/ubuntu/snaps-manager/dirs"
-	"github.com/ubuntu/snaps-manager/logger"
+	"github.com/ubuntu/snaps-demo-manager/dirs"
+	"github.com/ubuntu/snaps-demo-manager/logger"
 
 	"gopkg.in/yaml.v2"
 )
