@@ -17,7 +17,7 @@
  *
  */
 
-package client
+package snapd
 
 import (
 	"bytes"
@@ -34,11 +34,11 @@ import (
 
 const socketPath = "/run/snapd.socket"
 
-// C client to communicate with Snapd
-var C *Client
+// Client client to communicate with Snapd
+var Client *Client
 
 func init() {
-	C = &Client{
+	Client = &Client{
 		baseURL: url.URL{
 			Scheme: "http",
 			Host:   "localhost",

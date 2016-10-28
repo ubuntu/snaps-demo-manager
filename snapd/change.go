@@ -17,7 +17,7 @@
  *
  */
 
-package client
+package snapd
 
 import (
 	"bytes"
